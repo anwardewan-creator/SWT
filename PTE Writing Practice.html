@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTE Academic — Writing: Summarize Written Text</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182226;
+    --ink-soft:#4b5a5f;
+    --paper:#eef3f4;
+    --card:#ffffff;
+    --line:#dbe5e7;
+    --cyan:#2c5f6e;
+    --cyan-deep:#1c414c;
+    --cyan-tint:#e2eef1;
+    --good:#1f7a4d;
+    --good-tint:#e6f4ec;
+    --mid:#b7841f;
+    --mid-tint:#faf1de;
+    --bad:#b4442e;
+    --bad-tint:#fbe9e5;
+    --shadow: 0 1px 2px rgba(24,34,38,.05), 0 8px 24px rgba(24,34,38,.07);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px 80px;}
+  h1,h2,h3{font-family:'Source Serif 4',Georgia,serif;color:var(--ink);}
+  .masthead{background:var(--ink);color:#eef3f4;padding:38px 24px 34px;margin-bottom:36px;}
+  .masthead-inner{max-width:900px;margin:0 auto;}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fc7d6;margin-bottom:10px;}
+  .masthead h1{font-size:33px;margin:0 0 6px;color:#fff;font-weight:600;}
+  .masthead p{margin:0;color:#c2ced1;font-size:15px;max-width:600px;}
+
+  .progress-rail{position:sticky;top:0;z-index:30;background:rgba(238,243,244,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:12px 24px;}
+  .progress-rail-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+  .progress-track{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;}
+  .progress-fill{height:100%;background:var(--cyan);border-radius:3px;transition:width .35s ease;}
+  .progress-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:30px 32px;margin-bottom:24px;}
+  .card h2{font-size:22px;margin:0 0 14px;}
+  .card h3{font-size:16px;margin:22px 0 8px;color:var(--cyan-deep);}
+  .card p{margin:0 0 12px;color:var(--ink-soft);font-size:15px;}
+  ul.tick{margin:0 0 6px;padding-left:0;list-style:none;}
+  ul.tick li{position:relative;padding-left:24px;margin-bottom:9px;color:var(--ink-soft);font-size:14.5px;}
+  ul.tick li::before{content:"—";position:absolute;left:0;color:var(--cyan);font-weight:700;}
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0 6px;}
+  .meta-box{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px 16px;}
+  .meta-box .label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan-deep);margin-bottom:4px;}
+  .meta-box .value{font-size:14.5px;color:var(--ink);}
+
+  .btn{font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;border:none;border-radius:7px;padding:12px 22px;cursor:pointer;transition:transform .12s ease, background .15s ease;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-primary:hover{background:#26363b;}
+  .btn-primary:disabled{background:#a9b6b9;cursor:not-allowed;}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
+  .btn-cyan{background:var(--cyan);color:#fff;}
+  .btn-cyan:hover{background:var(--cyan-deep);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;align-items:center;}
+
+  .q-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan-deep);background:var(--cyan-tint);padding:4px 10px;border-radius:20px;margin-bottom:14px;}
+
+  .timer-banner{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;margin-bottom:18px;font-size:14px;font-weight:600;background:var(--cyan-tint);color:var(--cyan-deep);}
+  .timer-banner.warn{background:var(--mid-tint);color:#8a651b;}
+  .timer-banner.danger{background:var(--bad-tint);color:var(--bad);}
+  .dot{width:9px;height:9px;border-radius:50%;background:currentColor;flex:none;}
+  .timer-num{font-family:'JetBrains Mono',monospace;font-weight:700;margin-left:auto;font-size:15px;}
+
+  .passage{
+    font-size:15.5px; line-height:1.85; color:var(--ink); font-family:'Source Serif 4',Georgia,serif;
+    background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:18px 20px; margin:14px 0 20px;
+    max-height:280px; overflow-y:auto;
+  }
+
+  .answer-textarea{
+    width:100%;min-height:120px;font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;
+    border:1.5px solid #b9c7ca;border-radius:8px;padding:14px 16px;color:var(--ink);background:#fbfdfd;
+    resize:vertical;
+  }
+  .answer-textarea:focus{outline:none;border-color:var(--cyan);background:#fff;}
+  .wc-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12.5px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+  .wc-row .wc-ok{color:var(--good);}
+  .wc-row .wc-bad{color:var(--bad);}
+
+  .notice{background:var(--mid-tint);border:1px solid #e6d19a;border-radius:8px;padding:10px 14px;font-size:13px;color:#8a651b;margin-top:14px;margin-bottom:6px;}
+
+  .score-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .score-cell{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px;text-align:center;flex:1;min-width:110px;}
+  .score-cell .label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:6px;}
+  .score-cell .val{font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;}
+  .score-cell .val small{font-size:14px;font-weight:400;color:var(--ink-soft);}
+  .score-cell .tag{font-size:10.5px;color:var(--ink-soft);margin-top:4px;}
+
+  .rubric-block{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-top:10px;background:var(--paper);}
+  .rubric-title{font-weight:700;font-size:14px;margin-bottom:8px;}
+  .rubric-opt{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-radius:6px;cursor:pointer;}
+  .rubric-opt:hover{background:var(--cyan-tint);}
+  .rubric-opt input{margin-top:3px;accent-color:var(--cyan);}
+  .rubric-opt .band{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cyan-deep);flex:none;width:20px;}
+  .rubric-opt .desc{font-size:13.5px;color:var(--ink-soft);}
+
+  .explain-box{background:var(--paper);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:16px;font-size:13.5px;color:var(--ink-soft);}
+  .explain-box b{color:var(--ink);}
+  .keyword-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:2px 8px;border-radius:12px;margin:2px 3px 2px 0;}
+  .keyword-chip.hit{background:var(--good-tint);color:var(--good);}
+  .keyword-chip.miss{background:var(--bad-tint);color:var(--bad);}
+
+  .model-answer{background:var(--good-tint);border:1px solid var(--good);border-radius:8px;padding:14px 16px;font-size:14.5px;color:var(--ink);font-style:italic;}
+
+  .score-hero{text-align:center;padding:10px 0 6px;}
+  .score-num{font-family:'Source Serif 4',serif;font-size:64px;font-weight:700;color:var(--ink);line-height:1;}
+  .score-num span{font-size:26px;color:var(--ink-soft);font-weight:400;}
+  .score-band{display:inline-block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan-deep);background:var(--cyan-tint);padding:6px 14px;border-radius:20px;}
+  .per-q-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:22px;}
+  .per-q-card{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--paper);text-align:center;}
+  .per-q-card .pq-title{font-size:12.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .per-q-card .pq-score{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--cyan-deep);}
+
+  .divider{height:1px;background:var(--line);margin:26px 0;}
+  .footer-note{text-align:center;color:var(--ink-soft);font-size:12.5px;margin-top:30px;}
+
+  @media (max-width:560px){
+    .masthead h1{font-size:26px;}
+    .card{padding:22px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="kicker">PTE Academic · Part 1 · Writing</div>
+    <h1>Summarize Written Text</h1>
+    <p>Four passages rebuilt as an interactive workbook with a real 10-minute timer, a word counter, PTE-style scoring where it can be checked automatically, a self-assessment rubric for the rest, and a full review with model answers.</p>
+  </div>
+</div>
+
+<div class="progress-rail" id="progressRail" style="display:none;">
+  <div class="progress-rail-inner">
+    <div class="progress-label" id="progressLabel">Question 1 / 4</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+    <div class="progress-label" id="progressScoreLabel"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ================= INTRO SCREEN ================= -->
+  <div id="screen-intro">
+    <div class="card">
+      <h2>About this task type</h2>
+      <p>In <b>Summarize Written Text</b>, you read a passage of up to 300 words and write a single-sentence summary of it, between 5 and 75 words, in 10 minutes. This task draws on both your reading and writing skills.</p>
+      <div class="meta-grid">
+        <div class="meta-box"><div class="label">Tasks per test</div><div class="value">2</div></div>
+        <div class="meta-box"><div class="label">Skills assessed</div><div class="value">Reading & Writing</div></div>
+        <div class="meta-box"><div class="label">Passage length</div><div class="value">Up to 300 words</div></div>
+        <div class="meta-box"><div class="label">Answer time</div><div class="value">10 minutes</div></div>
+      </div>
+
+      <h3>Scoring — the official PTE method</h3>
+      <ul class="tick">
+        <li><b>Content (0–4):</b> how well your sentence captures the main points of the passage.</li>
+        <li><b>Form (0–1):</b> a single sentence, 5–75 words, starting with a capital letter and ending with a full stop. A response that isn't one sentence, or is written all in capitals, is not scored at all.</li>
+        <li><b>Grammar (0–2):</b> correct grammatical structure throughout.</li>
+        <li><b>Vocabulary (0–2):</b> appropriate word choice, ideally paraphrasing the passage rather than copying it directly.</li>
+        <li>Maximum score per item: <b>9</b>.</li>
+      </ul>
+
+      <div class="notice">This workbook can reliably auto-check <b>Form</b> (word count, single sentence, capitalization, punctuation) and can approximate <b>Content</b> by checking whether your sentence covers the passage's key points. <b>Grammar</b> and <b>Vocabulary</b> need genuine language judgement that a static page can't perform, so instead of guessing a number, this workbook shows you the official band descriptors and lets you self-assess honestly against them — same as the real scoring criteria, just scored by you instead of an examiner.</div>
+
+      <h3>Strategy: before writing</h3>
+      <ul class="tick">
+        <li>Take your time to read the passage calmly. Skim first for the general topic, then read carefully for the main ideas.</li>
+        <li>Note the main idea and supporting ideas using keywords, symbols, or arrows to show how the ideas connect.</li>
+        <li>Effective note-taking ensures your summary contains all the main points — but don't spend too long on it; a few minutes is enough.</li>
+      </ul>
+
+      <h3>Strategy: while writing</h3>
+      <ul class="tick">
+        <li>Type the main point first, then add supporting details.</li>
+        <li>Your summary must be a single sentence of 5–75 words: start with a capital letter, end with a full stop.</li>
+        <li>Watch your grammar and punctuation as you write.</li>
+        <li>Use Cut, Copy and Paste (your keyboard's normal Ctrl/Cmd+X, C, V) to rearrange text if needed.</li>
+        <li>Keep an eye on the time and your word count as you go.</li>
+      </ul>
+
+      <h3>Strategy: after writing</h3>
+      <ul class="tick">
+        <li>Check whether your sentence covers the theme of the whole passage.</li>
+        <li>Recheck your grammar and vocabulary.</li>
+        <li>Confirm your sentence starts with a capital letter, ends with a full stop, and is within the 5–75 word limit.</li>
+        <li>If you finish early, review your answer before time runs out — once the 10 minutes end, you can no longer edit your response.</li>
+      </ul>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="startPractice()">Start practice — Question 1 of 4</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= QUESTION SCREENS ================= -->
+  <div id="screen-questions" style="display:none;"></div>
+
+  <!-- ================= RESULTS SCREEN ================= -->
+  <div id="screen-results" style="display:none;"></div>
+
+  <div class="footer-note">PTE Academic® is a registered trademark of Pearson. This is an independent practice workbook and is not affiliated with or endorsed by Pearson.</div>
+</div>
+
+<script>
+/* ============================= DATA ============================= */
+const QUESTIONS = [
+  {
+    title: "Practice 1 — Sport and carbon neutrality",
+    passage: "Major athletic events around the globe — from the 2014 Sochi Olympics to an annual powerboat race in Norwegian fjords — are striving to neutralize their carbon footprint as part of a worldwide climate network, the United Nations Environment Programme (UNEP) said today. The sporting events are the latest participants to join the network, and are particularly important for inspiring further global action on the environment, said Achim Steiner, UNEP Executive Director. Organizers of the 2014 Sochi Olympic and Paralympic Winter Games — to be held in a unique natural setting between the shores of the Black Sea and the soaring snow-capped Caucasus Mountains — say they will put an estimated $1.75 billion into energy conservation and renewable energy. That investment will be dedicated to improving transport infrastructure, offsetting greenhouse gas emissions from the use of electricity, air travel and ground transportation, the reforestation of Sochi National Park and the development of green belts in the city.",
+    keypoints: [
+      { label: "Major athletic events worldwide", test: /athletic event|sporting event/i },
+      { label: "2014 Sochi Olympics", test: /sochi|2014/i },
+      { label: "Striving to neutralize carbon footprint", test: /carbon footprint|neutrali[sz]e/i },
+      { label: "Joining a climate network (UNEP)", test: /network|unep|united nations/i },
+      { label: "Inspiring further global action", test: /inspir/i },
+      { label: "On the environment", test: /environment/i },
+      { label: "Organizers' role", test: /organi[sz]er/i },
+      { label: "$1.75 billion into energy conservation/renewable energy", test: /1\.75\s*billion|energy conservation|renewable energy/i }
+    ],
+    modelAnswer: "Ahead of the 2014 Sochi Winter Olympics, organizers have joined a UN-backed climate network and will invest an estimated $1.75 billion in energy conservation and renewable energy, aiming to neutralize the Games' carbon footprint and inspire further global environmental action."
+  },
+  {
+    title: "Practice 2 — Museology",
+    passage: "What is museology? A simple definition might be that it is the study of museums, their history and underlying philosophy, the various ways in which they have, over time, been established and developed, their avowed or unspoken aims and policies, their educative or political or social role. More broadly conceived, such a study might also embrace the bewildering variety of audiences — visitors, scholars, art lovers, children — at whom the efforts of museum staff are supposedly directed, as well as related topics such as the legal duties and responsibilities placed upon (or incurred by) museums, perhaps even some thought as to their future. Seen in this light, museology might appear at first sight a subject so specialized as to concern only museum professionals, who by virtue of their occupation are more or less obliged to take an interest in it. In reality, since museums are almost, if not quite as old as civilization itself, and since the plethora of present-day museums embraces virtually every field of human endeavour — not just art, or craft, or science, but entertainment, agriculture, rural life, childhood, fisheries, antiquities, automobiles: the list is endless — it is a field of inquiry so broad as to be a matter of concern to almost everybody.",
+    keypoints: [
+      { label: "Museology defined", test: /museolog/i },
+      { label: "Study of museums", test: /study of museum/i },
+      { label: "Their history / philosophy", test: /histor|philosoph/i },
+      { label: "Embraces variety of audiences", test: /audience/i },
+      { label: "Related topics (legal duties, future)", test: /related topic|legal dut|responsibilit/i },
+      { label: "Might seem specialized (only for professionals)", test: /special/i },
+      { label: "But museums cover every field of human endeavour", test: /every field|human endeavour|human endeavor/i },
+      { label: "So it's a broad field of inquiry", test: /broad|field of inquiry/i },
+      { label: "Concern to almost everybody", test: /almost everybody|everyone/i }
+    ],
+    modelAnswer: "Museology, the broad study of museums — their history, philosophy, audiences and related legal and social issues — may seem a specialized field for professionals, but because museums today cover almost every area of human activity, it is in fact a matter of interest to almost everybody."
+  },
+  {
+    title: "Practice 3 — The rise of remote work",
+    passage: "Since 2020, remote work has evolved from a temporary emergency measure into a permanent feature of many organizations' operating models. Surveys conducted across a range of industries indicate that a majority of employees now prefer some degree of flexibility in where they complete their tasks, citing reduced commuting time and improved work-life balance as the primary benefits. Employers, meanwhile, have reported mixed outcomes: while some companies have seen productivity gains and lower overhead costs from smaller office footprints, others have struggled to maintain the informal collaboration and mentorship that used to happen naturally in a shared workspace. To address this, many organizations have adopted hybrid models, requiring staff to attend the office on specific days while allowing remote work on others. Critics argue that hybrid arrangements can create a two-tier culture, in which employees who are physically present are perceived as more committed than those working from home, regardless of actual output. Proponents counter that with clear communication standards and deliberate efforts to include remote staff in decision-making, hybrid work can deliver the advantages of flexibility without sacrificing organizational cohesion.",
+    keypoints: [
+      { label: "Remote work now permanent, not just a pandemic measure", test: /permanent|since 2020/i },
+      { label: "Employees prefer flexibility (commute, work-life balance)", test: /flexib|commut|work-life/i },
+      { label: "Employers report mixed outcomes", test: /mixed outcome|productivity/i },
+      { label: "Hybrid models adopted as compromise", test: /hybrid/i },
+      { label: "Risk of a two-tier / presence-bias culture", test: /two-tier|presence|physically present/i },
+      { label: "Communication & inclusion can preserve cohesion", test: /communication|cohesion|inclu/i }
+    ],
+    modelAnswer: "Although remote work has become a permanent, employee-preferred feature of many workplaces since 2020, employers face mixed outcomes and have largely adopted hybrid models to balance flexibility with the risk of a two-tier office culture."
+  },
+  {
+    title: "Practice 4 — Coral reefs and ocean health",
+    passage: "Coral reefs cover less than one percent of the ocean floor, yet they support roughly a quarter of all known marine species, making them among the most biologically rich ecosystems on the planet. These structures are built over centuries by colonies of tiny organisms called polyps, which secrete calcium carbonate to form the reef's hard skeleton. Rising sea temperatures, however, have placed unprecedented stress on these delicate systems. When water becomes too warm, polyps expel the colorful algae living within their tissues in a process known as coral bleaching, leaving the reef pale and vulnerable to disease. Repeated bleaching events, combined with ocean acidification caused by increased carbon dioxide absorption, have already destroyed significant sections of major reef systems worldwide, including parts of Australia's Great Barrier Reef. Conservationists are pursuing several strategies to slow this decline, from breeding heat-resistant coral strains in laboratories to establishing marine protected areas that limit fishing and pollution. While these efforts have shown localized success, most scientists agree that meaningfully reducing global carbon emissions remains the only long-term solution capable of preserving reef ecosystems for future generations.",
+    keypoints: [
+      { label: "Reefs support huge biodiversity despite tiny area", test: /quarter|biodivers|marine species/i },
+      { label: "Built by polyps over centuries", test: /polyp/i },
+      { label: "Rising sea temperatures cause coral bleaching", test: /bleach|warm/i },
+      { label: "Bleaching + acidification damaging reefs (e.g. Great Barrier Reef)", test: /acidification|great barrier reef/i },
+      { label: "Conservation strategies (heat-resistant breeding, protected areas)", test: /heat-resistant|protected area|conservation/i },
+      { label: "Long-term solution = reducing carbon emissions", test: /carbon emission/i }
+    ],
+    modelAnswer: "Coral reefs, though covering a tiny fraction of the ocean floor, support a quarter of marine species but are being severely damaged by warming-induced bleaching and acidification, and while conservation efforts like heat-resistant breeding and protected areas help locally, scientists agree that only reducing global carbon emissions can secure their long-term survival."
+  }
+];
+
+const WRITE_SECONDS = 600; // 10 minutes
+
+/* ============================= STATE ============================= */
+let current = 0;
+let timers = QUESTIONS.map(()=>null);
+let remaining = QUESTIONS.map(()=>WRITE_SECONDS);
+let timedOut = QUESTIONS.map(()=>false);
+const userAnswers = QUESTIONS.map(()=>'');
+const rubricPicks = QUESTIONS.map(()=>({grammar:null, vocabulary:null}));
+let submitted = QUESTIONS.map(()=>false);
+
+/* ============================= NAV ============================= */
+function startPractice(){
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-questions').style.display = 'block';
+  document.getElementById('progressRail').style.display = 'block';
+  current = 0;
+  enterQuestion();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function enterQuestion(){
+  if(!timers[current] && !submitted[current] && !timedOut[current]){
+    startTimer(current);
+  }
+  renderQuestion();
+}
+
+function startTimer(qi){
+  timers[qi] = setInterval(()=>{
+    remaining[qi]--;
+    if(remaining[qi] <= 0){
+      clearInterval(timers[qi]);
+      timers[qi] = null;
+      timedOut[qi] = true;
+      if(qi === current){ lockAnswer(); renderQuestion(); }
+    } else if(qi === current){
+      updateTimerDisplay();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(){
+  const el = document.getElementById('timerNum');
+  const banner = document.getElementById('timerBanner');
+  if(!el) return;
+  const m = Math.floor(remaining[current]/60), s = remaining[current]%60;
+  el.textContent = `${m}:${String(s).padStart(2,'0')}`;
+  if(banner){
+    banner.classList.remove('warn','danger');
+    if(remaining[current] <= 60) banner.classList.add('danger');
+    else if(remaining[current] <= 180) banner.classList.add('warn');
+  }
+}
+
+function lockAnswer(){
+  const ta = document.getElementById('answerBox');
+  if(ta) userAnswers[current] = ta.value;
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  const isLast = current === QUESTIONS.length - 1;
+  const locked = timedOut[current] || submitted[current];
+  const m = Math.floor(remaining[current]/60), s = remaining[current]%60;
+
+  const words = tokenizeWords(userAnswers[current]).length;
+
+  document.getElementById('screen-questions').innerHTML = `
+    <div class="card">
+      <div class="q-tag">${current+1} / ${QUESTIONS.length}</div>
+      <h2>${q.title}</h2>
+      <p>Read the passage below and summarize it in one sentence. Type your response in the box. You have 10 minutes for this task.</p>
+      <div class="timer-banner" id="timerBanner"><span class="dot"></span> Writing time remaining<span class="timer-num" id="timerNum">${m}:${String(s).padStart(2,'0')}</span></div>
+      <div class="passage">${escapeHtml(q.passage)}</div>
+      <textarea class="answer-textarea" id="answerBox" placeholder="Type your one-sentence summary here…" ${locked?'disabled':''} oninput="onType(this.value)">${escapeHtml(userAnswers[current])}</textarea>
+      <div class="wc-row">
+        <span>Use your keyboard's normal Cut / Copy / Paste as in the real test.</span>
+        <span id="wcDisplay">${words} words</span>
+      </div>
+      ${timedOut[current] && !submitted[current] ? `<div class="notice">Time's up — your response has been locked, just like in the real test. Click Check my answer to see your score.</div>` : ''}
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="goPrev()" ${current===0 ? 'disabled':''}>← Previous</button>
+        ${!locked ? `<button class="btn btn-ghost" onclick="clearQuestion()">Clear this question</button>` : ''}
+        ${!submitted[current]
+          ? `<button class="btn btn-cyan" onclick="checkAnswer()">Check my answer →</button>`
+          : (isLast
+              ? `<button class="btn btn-cyan" onclick="submitAll()">Finish & see full results →</button>`
+              : `<button class="btn btn-primary" onclick="goNext()">Next question →</button>`)}
+      </div>
+      ${submitted[current] ? renderScorePanel(current) : ''}
+    </div>
+  `;
+  updateProgressBar();
+}
+
+function tokenizeWords(str){
+  return (str.trim().match(/\S+/g) || []);
+}
+
+function onType(value){
+  userAnswers[current] = value;
+  const words = tokenizeWords(value).length;
+  const wc = document.getElementById('wcDisplay');
+  if(wc){
+    wc.textContent = `${words} words`;
+    wc.className = (words>=5 && words<=75) ? 'wc-ok' : (words>0 ? 'wc-bad' : '');
+  }
+}
+
+function goNext(){ if(current < QUESTIONS.length-1){ current++; enterQuestion(); window.scrollTo({top:0,behavior:'smooth'});} }
+function goPrev(){ if(current > 0){ current--; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'});} }
+function clearQuestion(){
+  userAnswers[current] = '';
+  const ta = document.getElementById('answerBox');
+  if(ta) ta.value = '';
+  onType('');
+}
+
+function updateProgressBar(){
+  document.getElementById('progressLabel').textContent = `Question ${current+1} / ${QUESTIONS.length}`;
+  document.getElementById('progressFill').style.width = `${((current+1)/QUESTIONS.length)*100}%`;
+  document.getElementById('progressScoreLabel').textContent = submitted[current] ? 'checked' : `${tokenizeWords(userAnswers[current]).length} words so far`;
+}
+
+/* ============================= SCORING ============================= */
+function checkFormAndContent(qi){
+  const q = QUESTIONS[qi];
+  const text = (userAnswers[qi]||'').trim();
+  const words = tokenizeWords(text);
+  const wordCount = words.length;
+
+  const startsUpper = /^[A-Z0-9"']/.test(text);
+  const endsPeriod = /\.$/.test(text);
+  const withoutTrailingPeriod = text.replace(/\.\s*$/, '');
+  const hasInternalStop = /[.!?]/.test(withoutTrailingPeriod);
+  const isAllCaps = text.length > 3 && text === text.toUpperCase() && /[A-Z]/.test(text);
+  const wordCountOk = wordCount >= 5 && wordCount <= 75;
+
+  const formOk = wordCountOk && startsUpper && endsPeriod && !hasInternalStop && !isAllCaps;
+  const form = formOk ? 1 : 0;
+
+  const hits = q.keypoints.map(kp => kp.test.test(text));
+  const hitCount = hits.filter(Boolean).length;
+  const ratio = hitCount / q.keypoints.length;
+  let content;
+  if(ratio >= 0.4) content = 4;
+  else if(ratio >= 0.25) content = 3;
+  else if(ratio >= 0.1) content = 2;
+  else if(ratio > 0) content = 1;
+  else content = 0;
+  if(wordCount === 0) content = 0;
+
+  return { content, form, hits, wordCount, formDetails: {startsUpper, endsPeriod, hasInternalStop, isAllCaps, wordCountOk} };
+}
+
+function checkAnswer(){
+  lockAnswer();
+  if(timers[current]){ clearInterval(timers[current]); timers[current] = null; }
+  submitted[current] = true;
+  renderQuestion();
+}
+
+const GRAMMAR_BANDS = [
+  { v:2, label:"2 — Correct grammatical structures throughout." },
+  { v:1, label:"1 — Some grammatical errors, but they don't prevent understanding." },
+  { v:0, label:"0 — Frequent or serious grammatical errors that obscure meaning." }
+];
+const VOCAB_BANDS = [
+  { v:2, label:"2 — Appropriate choice of words; the passage is paraphrased effectively, not just copied." },
+  { v:1, label:"1 — Some inappropriate word choices, or heavy copying from the source text." },
+  { v:0, label:"0 — Inappropriate word choice throughout, making the response hard to understand." }
+];
+
+function renderScorePanel(qi){
+  const q = QUESTIONS[qi];
+  const r = checkFormAndContent(qi);
+  const rp = rubricPicks[qi];
+  const grammarVal = rp.grammar;
+  const vocabVal = rp.vocabulary;
+  const autoTotal = r.content + r.form;
+  const selfTotal = (grammarVal!==null?grammarVal:0) + (vocabVal!==null?vocabVal:0);
+  const grandTotal = autoTotal + selfTotal;
+
+  const kpChips = q.keypoints.filter((kp,i)=>r.hits[i]).map(kp => `<span class="keyword-chip hit">✓ ${escapeHtml(kp.label)}</span>`).join(' ') || '<span style="color:var(--ink-soft);">(no specific themes matched yet — that\'s okay if your sentence still captures the overall gist)</span>';
+
+  return `
+    <div class="divider"></div>
+    <h3 style="margin-top:0;">Your score for this item</h3>
+    <div class="score-row">
+      <div class="score-cell"><div class="label">Content</div><div class="val">${r.content}<small>/4</small></div><div class="tag">auto-checked</div></div>
+      <div class="score-cell"><div class="label">Form</div><div class="val">${r.form}<small>/1</small></div><div class="tag">auto-checked</div></div>
+      <div class="score-cell"><div class="label">Grammar</div><div class="val">${grammarVal!==null?grammarVal:'–'}<small>/2</small></div><div class="tag">self-assessed</div></div>
+      <div class="score-cell"><div class="label">Vocabulary</div><div class="val">${vocabVal!==null?vocabVal:'–'}<small>/2</small></div><div class="tag">self-assessed</div></div>
+    </div>
+    <div class="explain-box">
+      <b>Content:</b> themes recognized in your sentence (you don't need every one listed — capturing the overall gist is enough for a strong score) — ${kpChips}
+      <div style="margin-top:8px;"><b>Form:</b> ${r.form ? 'Requirements met (5–75 words, one sentence, capital start, full stop).' : 'Not fully met — check word count, capitalization, and that it\'s a single sentence ending in a full stop.'}</div>
+    </div>
+
+    <div class="rubric-block">
+      <div class="rubric-title">Self-assess: Grammar</div>
+      ${GRAMMAR_BANDS.map(b => `<label class="rubric-opt"><input type="radio" name="grammar${qi}" value="${b.v}" ${grammarVal===b.v?'checked':''} onchange="setRubric(${qi},'grammar',${b.v})"><span class="band">${b.v}</span><span class="desc">${b.label.replace(/^\d\s—\s/,'')}</span></label>`).join('')}
+    </div>
+    <div class="rubric-block">
+      <div class="rubric-title">Self-assess: Vocabulary</div>
+      ${VOCAB_BANDS.map(b => `<label class="rubric-opt"><input type="radio" name="vocab${qi}" value="${b.v}" ${vocabVal===b.v?'checked':''} onchange="setRubric(${qi},'vocabulary',${b.v})"><span class="band">${b.v}</span><span class="desc">${b.label.replace(/^\d\s—\s/,'')}</span></label>`).join('')}
+    </div>
+
+    <div class="explain-box" style="margin-top:16px;">
+      <b>Model answer</b> (for comparison, not the only correct wording):<br>
+      <div class="model-answer" style="margin-top:8px;">${escapeHtml(q.modelAnswer)}</div>
+    </div>
+  `;
+}
+
+function setRubric(qi, criterion, val){
+  rubricPicks[qi][criterion] = val;
+  // update just the score cell + total without discarding the textarea content
+  const panel = document.querySelector('.card .divider').parentElement;
+  const idx = current;
+  // simplest safe re-render of the score panel only
+  const scorePanelHTML = renderScorePanel(idx);
+  const cardEl = document.querySelector('#screen-questions .card');
+  const dividerEl = cardEl.querySelector('.divider');
+  // remove everything from the divider onward, then re-insert
+  let node = dividerEl;
+  while(node){
+    const next = node.nextSibling;
+    node.remove();
+    node = next;
+  }
+  cardEl.insertAdjacentHTML('beforeend', scorePanelHTML);
+}
+
+/* ============================= FINAL RESULTS ============================= */
+function bandFor(pct){
+  if(pct >= 90) return "Excellent — comprehensive, well-formed summaries";
+  if(pct >= 75) return "Strong — covers most key points with good form";
+  if(pct >= 55) return "Developing — solid base, watch key points and sentence form";
+  if(pct >= 35) return "Needs practice — focus on capturing all main ideas in one sentence";
+  return "Early stage — revisit the strategies section";
+}
+
+function submitAll(){
+  QUESTIONS.forEach((q,qi)=>{ if(!submitted[qi]){ lockAnswerFor(qi); submitted[qi]=true; } });
+
+  let autoTotal = 0, autoMax = 0, selfTotal = 0, selfMax = 0;
+  const perQ = QUESTIONS.map((q,qi) => {
+    const r = checkFormAndContent(qi);
+    const rp = rubricPicks[qi];
+    const g = rp.grammar!==null?rp.grammar:0, v = rp.vocabulary!==null?rp.vocabulary:0;
+    autoTotal += r.content + r.form; autoMax += 5;
+    selfTotal += g+v; selfMax += 4;
+    return { content:r.content, form:r.form, grammar:g, vocabulary:v, total: r.content+r.form+g+v };
+  });
+  const grandTotal = autoTotal + selfTotal;
+  const grandMax = autoMax + selfMax;
+  const pct = Math.round((grandTotal/grandMax)*100);
+
+  let perQHtml = perQ.map((p,i) => `
+    <div class="per-q-card">
+      <div class="pq-title">${QUESTIONS[i].title}</div>
+      <div class="pq-score">${p.total} / 9</div>
+    </div>`).join('');
+
+  let reviewHtml = QUESTIONS.map((q, qi) => {
+    const r = checkFormAndContent(qi);
+    const rp = rubricPicks[qi];
+    const kpChips = q.keypoints.filter((kp,i)=>r.hits[i]).map(kp => `<span class="keyword-chip hit">✓ ${escapeHtml(kp.label)}</span>`).join(' ') || '<span style="color:var(--ink-soft);">(no specific themes matched — still fine if the sentence captures the overall gist)</span>';
+    return `<div class="card">
+      <div class="q-tag">${qi+1} / ${QUESTIONS.length} — ${r.content+r.form+(rp.grammar||0)+(rp.vocabulary||0)}/9</div>
+      <h3 style="margin-top:0;">${q.title}</h3>
+      <div class="passage" style="max-height:180px;">${escapeHtml(q.passage)}</div>
+      <div class="explain-box"><b>Your summary:</b><br>${userAnswers[qi] ? escapeHtml(userAnswers[qi]) : '<i>(nothing written)</i>'}</div>
+      <div class="score-row">
+        <div class="score-cell"><div class="label">Content</div><div class="val">${r.content}<small>/4</small></div></div>
+        <div class="score-cell"><div class="label">Form</div><div class="val">${r.form}<small>/1</small></div></div>
+        <div class="score-cell"><div class="label">Grammar</div><div class="val">${rp.grammar!==null?rp.grammar:'–'}<small>/2</small></div></div>
+        <div class="score-cell"><div class="label">Vocabulary</div><div class="val">${rp.vocabulary!==null?rp.vocabulary:'–'}<small>/2</small></div></div>
+      </div>
+      <div class="explain-box"><b>Themes recognized</b> (not all need to appear — the overall gist matters most):<br><div style="margin-top:6px;">${kpChips}</div></div>
+      <div class="explain-box"><b>Model answer</b> (for comparison):<div class="model-answer" style="margin-top:8px;">${escapeHtml(q.modelAnswer)}</div></div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('screen-questions').style.display = 'none';
+  document.getElementById('progressRail').style.display = 'none';
+  const resultsEl = document.getElementById('screen-results');
+  resultsEl.style.display = 'block';
+  resultsEl.innerHTML = `
+    <div class="card score-hero">
+      <div class="kicker" style="color:var(--cyan-deep);">Your result</div>
+      <div class="score-num">${grandTotal}<span> / ${grandMax}</span></div>
+      <div class="score-band">${pct}% — ${bandFor(pct)}</div>
+      <p style="margin-top:18px;">Content and Form (max 5/item) are auto-checked from your text. Grammar and Vocabulary (max 4/item) reflect your own self-assessment against the official band descriptors — go back and select a band for each if you haven't yet, for a complete score.</p>
+      <div class="per-q-grid">${perQHtml}</div>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn btn-primary" onclick="scrollToReview()">See answer key & review ↓</button>
+        <button class="btn btn-ghost" onclick="restart()">Restart practice</button>
+      </div>
+    </div>
+    <div id="reviewAnchor"></div>
+    <h2 style="margin:34px 0 6px;">Answer key & review</h2>
+    <p style="color:var(--ink-soft);margin-top:0;margin-bottom:20px;">Each passage is shown with your summary, the auto-checked and self-assessed scores, which key points were detected, and a model answer for comparison.</p>
+    ${reviewHtml}
+  `;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function lockAnswerFor(qi){
+  if(qi === current){ lockAnswer(); }
+  if(timers[qi]){ clearInterval(timers[qi]); timers[qi] = null; }
+}
+
+function scrollToReview(){ document.getElementById('reviewAnchor').scrollIntoView({behavior:'smooth', block:'start'}); }
+
+function restart(){
+  QUESTIONS.forEach((_,i)=>{
+    userAnswers[i]=''; remaining[i]=WRITE_SECONDS; timedOut[i]=false; submitted[i]=false;
+    rubricPicks[i]={grammar:null, vocabulary:null};
+    if(timers[i]){ clearInterval(timers[i]); timers[i]=null; }
+  });
+  current = 0;
+  document.getElementById('screen-results').style.display = 'none';
+  document.getElementById('screen-intro').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================= UTIL ============================= */
+function escapeHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
